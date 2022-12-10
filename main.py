@@ -22,7 +22,21 @@ def execute(request: SimpleText, ray: OpenfabricExecutionRay) -> SimpleText:
     output = []
     for text in request.text:
         # TODO Add code here
-        response = ''
+        response = process(text)
         output.append(response)
 
     return SimpleText(dict(text=output))
+
+##############################################
+# Function to process the query              
+##############################################
+def process(text: str) -> str:
+    """
+    Process the question and generate a response.
+
+    :param text: [String] The science question.
+
+    :return: [String] The answer of the question.
+    """
+    
+    return f"query is {text}"
