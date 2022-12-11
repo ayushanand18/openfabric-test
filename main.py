@@ -27,9 +27,9 @@ def execute(request: SimpleText, ray: OpenfabricExecutionRay) -> SimpleText:
 
     return SimpleText(dict(text=output))
 
-##############################################
+############################################################
 # Function to process the query              
-##############################################
+############################################################
 def process(text: str) -> str:
     """
     Process the question and generate a response.
