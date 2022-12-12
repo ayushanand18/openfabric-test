@@ -6,7 +6,6 @@ This file contains the report made for the project containing information about 
 + [Possible solutions (and algorithms)]
 + [Proposed solution](#proposed-solution)
     + [Algorithm](#algorithm)
-+ [Comparsion between solutions](#comparing-solutions)
 + [Discussion and concluding remarks](#discussion-and-conclusion)
 + [Open Questions or remarks](#open-questions)
 
@@ -20,7 +19,7 @@ There are two stages in creating such a chatbot.
     + If it's a general text then pick the most correlated intent.
     + If it's a question based science then search for the answer to it.
 
-We will use `library` to build a chatbot. For the first part which is building a general chat flow we will define custom intents for general discussions. For the second part we will need to discover knowledge from the internet and there are various methods for it which have been detailed below.
+We will use `PyTorch` to build classify input text into pre-defined `intents`. For the first part which is building a general chat flow we will define custom intents for general discussions. For the second part we will need to discover knowledge from the internet and there are various methods for it which have been detailed below.
 
 ## Method 1
 The first method uses web scraping to extract information from a Google search of the question.
@@ -100,8 +99,6 @@ def return_response(text: str) -> str:
 
 ### Algorithm
 [Algorithm here](#algorithm)
-
-## Comparing solutions
 
 ## Discussion and Conclusion
 

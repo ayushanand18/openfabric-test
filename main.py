@@ -5,7 +5,8 @@ from ontology_dc8f06af066e4a7880a5938933236037.simple_text import SimpleText
 from openfabric_pysdk.context import OpenfabricExecutionRay
 from openfabric_pysdk.loader import ConfigClass
 from time import time
-
+from .model import model
+from .model import queries
 
 ############################################################
 # Callback function called on update config
@@ -38,5 +39,9 @@ def process(text: str) -> str:
 
     :return: [String] The answer of the question.
     """
-    
-    return f"query is {text}"
+    intent = model.predict(text)
+    if intent=="question_intent":
+        response = queries.perform_query(text)
+    else:
+        response = queries.dialogs[intent]
+    return response
