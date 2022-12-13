@@ -14,6 +14,14 @@ This file contains the report made for the project containing information about 
 The goal is to implement an NLP chatbot answering questions about science.
 
 ## Files included
+The `model` makes use of the following python packages on the top of the ones already included in the default docker image:
++ `pandas`
++ `bs4`
++ `requests`
++ `torch`
++ `torchtext`
++ `scikit-learn` (or sklearn)
+
 The `model` directory contains all the files used for inferencing the trained model.
 file|description
 ----|-----------
