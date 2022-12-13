@@ -13,7 +13,16 @@ import model.queries as queries
 ############################################################
 def config(configuration: ConfigClass):
     # TODO Add code here
-    pass
+    # check if the required modules are installed
+    try:
+        import torch
+        import torchtext
+        import sklearn
+        import pandas
+    except:
+        return "Please install ['torch', 'torchtext', 'sklearn', 'pandas'] python packages for the chatbot to work."
+    
+    return True
 
 
 ############################################################
@@ -46,6 +55,5 @@ def process(text: str) -> str:
         except:
             response = "I'm afraid I do not know the answer for this question. Can you please rephrase or try something else?"
     else:
-        print(intent)
         response = queries.dialogs[intent]
     return response
