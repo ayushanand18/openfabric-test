@@ -12,6 +12,7 @@ dialogs = {
     "whoami_intent":"Hi! I am a chatbot that can help you answer questions in science. Try asking me one.",
     "bye_intent": "Nice talking to you. Good day!",
 }
+
 # find the most correlated query
 def findbest(query, res_list):
     l = []
@@ -22,6 +23,7 @@ def findbest(query, res_list):
         l.append(cosine_similarity_matrix[0][1])
     return l.index(max(l))
 
+# perform the knowledge discvery from the web on the question text
 def perform_query(text):
     # construct url
     url = f"https://google.com/search?q={text}"

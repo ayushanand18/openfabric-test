@@ -3,26 +3,44 @@ This file contains the report made for the project containing information about 
 
 ## Table of contents
 + [Introduction](#introduction)
-+ [Possible solutions (and algorithms)]
-+ [Proposed solution](#proposed-solution)
-    + [Algorithm](#algorithm)
++ [Necessary files](#files-included)
++ [Possible solution (and algorithm)](#possible-solutions)
+    + [Method](#method)
+        + [Algorithm](#algorithm)
+        + [Python implementation](#python-implementation)
 + [Discussion and concluding remarks](#discussion-and-conclusion)
-+ [Open Questions or remarks](#open-questions)
 
 ## Introduction
 The goal is to implement an NLP chatbot answering questions about science.
 
-## Possible solutions
+## Files included
+The `model` directory contains all the files used for inferencing the trained model.
+file|description
+----|-----------
+`intent-pair.csv`|dataset used to train the `TextClassificationModel`.
+`notebook`|The Jupyter notebook used for training the PyTorch based model [can be found here](https://www.kaggle.com/code/theayushanand/text-intent-classification-using-pytorch).
+`model.py`|script for inferencing the model.
+`queries.py`|script for knowledge discovery when `question_intent` is trigerred and define responses to other intents.
+
+## Possible solution
 There are two stages in creating such a chatbot.
 1. Define intents and responses that handles normal user queries.
 2. Identify whether the query matches a normal intent or is a science question.
     + If it's a general text then pick the most correlated intent.
     + If it's a question based science then search for the answer to it.
 
-We will use `PyTorch` to build classify input text into pre-defined `intents`. For the first part which is building a general chat flow we will define custom intents for general discussions. For the second part we will need to discover knowledge from the internet and there are various methods for it which have been detailed below.
+We will use `PyTorch` to build classify input text into pre-defined `intents`. 
 
-## Method 1
-The first method uses web scraping to extract information from a Google search of the question.
+For the first part which is building a general chat flow we will define custom intents for general discussions. We built a `TextClassificationModel` using PyTorch and used `torchtext` for pre-processing pipeline. 
+1. We created a custom dataset and defined some default intents. [Ref dataset](./model/intent-pair.csv)
+2. Then we trained a PyTorch based Sequential model on the dataset. [Ref notebook](https://www.kaggle.com/code/theayushanand/text-intent-classification-using-pytorch)
+3. We perform segmentation/tokenisation using `torchtext` on each query string and replace it with corresponding `int id` from the vocabulary we built over our training data.
+4. We predict the `intent` from the query and perform action as detailed in the above algorithm.
+
+For the second part we will need to discover knowledge from the internet and the method has been detailed below.
+
+## Method
+This method uses web scraping to extract information from a Google search of the question.
 A Google is fast and convenient, and can extract knowledge very quickly from a vast number of resources including Wikipedia articles, science forums, etc,.
 
 ### Algorithm
@@ -94,13 +112,8 @@ def return_response(text: str) -> str:
     return response
 ```
 
-## Proposed Solution
-[Method 1](#method-1) is the best method for speed and reliability.
-
-### Algorithm
-[Algorithm here](#algorithm)
-
 ## Discussion and Conclusion
-
-## Open Questions
-
++ The `TextClassificationModel` is pretty good at detecting the best matched `intent` to a user's query as can be seen from the model inference in the Jupyter notebook.
++ The `TextClassificationModel` we have built has limited pre-defined intents at the moment. For a general model we need to expand it by adding more `intents`. At this time, it has only 3 `intents` apart from detecting if a science-based question is asked. 
++ Also, the model is pre-trained right now. We can develop a feedback pipeline to it for continous learning after the initial training so that the classification continous to get more accurate.
++ Currently, we have only one set of response for each intent (except the `question_intent` wherein it does knowledge discovery from the web). We can expand it to support a varied response set for each intent to add a human touch.
