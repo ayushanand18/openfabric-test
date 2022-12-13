@@ -1,12 +1,15 @@
 # importing modules
 import torch.nn as nn
-import torch.tensor as tensor
+from torch import tensor as tensor
 from torch import no_grad
 from torchtext.data.utils import get_tokenizer
 from torchtext.vocab import build_vocab_from_iterator
+from torch.utils.data import Dataset
+from torch import load
+import pandas as pd
 
 # defining the required parameters
-class DatasetClass(torch.utils.data.Dataset):
+class DatasetClass(Dataset):
     def __init__(self, filepath):
         self.data = pd.read_csv(filepath, header=0)
         
@@ -16,7 +19,7 @@ class DatasetClass(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.data)
 
-dataset = DatasetClass("intent_pair.csv")
+dataset = DatasetClass("model/intent_pair.csv")
 
 tokenizer = get_tokenizer('basic_english')
 train_iter = iter(dataset)
@@ -26,6 +29,7 @@ def yield_tokens(data_iter):
         yield tokenizer(dataset[idx][1])
 
 vocab = build_vocab_from_iterator(yield_tokens(dataset), specials=["<unk>"])
+vocab.set_default_index(vocab["<unk>"])
 text_pipeline = lambda x: vocab(tokenizer(x))
 label_pipeline = lambda x: int(x)
 
@@ -47,8 +51,8 @@ class TextClassificationModel(nn.Module):
         embedded = self.embedding(text, offsets)
         return self.fc(embedded)
 
-model = TextClassificationModel()
-model.load_state_dict('weights.pth')
+model = TextClassificationModel(len(vocab), 64, 4)
+model.load_state_dict(load('model/weights.pth'))
 
 label_list = {
     0: "hello_intent",
@@ -61,4 +65,4 @@ def predict(text):
     with no_grad():
         text = tensor(text_pipeline(text))
         output = model(text, tensor([0]))
-        return output.argmax(1).item()
+        return label_list[output.argmax(1).item()]
