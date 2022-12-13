@@ -1,6 +1,8 @@
 # AI Junior Developer (Intern) Test 
 Welcome! and thank you for applying! 
 
+> [@ayushanand18: Read notes for the submission in notes.md](notes.md)
+
 ## Requirement
 The current project has the blueprint structure of an AI App. 
 
