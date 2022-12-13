@@ -35,7 +35,6 @@ def perform_query(text):
     parsed = bs4.BeautifulSoup(res.text, "html.parser")
     # since search results are h3, lets pick the h3 tags
     headings = parsed.find_all("h3")
-    # print(headings)
     headingsT = [info.getText() for info in headings]
     wiki = 1 if "Description" in headingsT else 0
     featured = 1 if "About featured snippets" in parsed.body.text else 0
