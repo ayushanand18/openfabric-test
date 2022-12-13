@@ -4,7 +4,7 @@ This file contains the report made for the project containing information about 
 ## Table of contents
 + [Introduction](#introduction)
 + [Necessary files](#files-included)
-+ [Possible solution (and algorithm)](#possible-solutions)
++ [Possible solution (and algorithm)](#possible-solution)
     + [Method](#method)
         + [Algorithm](#algorithm)
         + [Python implementation](#python-implementation)
@@ -17,7 +17,7 @@ The goal is to implement an NLP chatbot answering questions about science.
 The `model` directory contains all the files used for inferencing the trained model.
 file|description
 ----|-----------
-`intent-pair.csv`|dataset used to train the `TextClassificationModel`.
+`intent_pair.csv`|dataset used to train the `TextClassificationModel`.
 `notebook`|The Jupyter notebook used for training the PyTorch based model [can be found here](https://www.kaggle.com/code/theayushanand/text-intent-classification-using-pytorch).
 `model.py`|script for inferencing the model.
 `queries.py`|script for knowledge discovery when `question_intent` is trigerred and define responses to other intents.
@@ -32,7 +32,7 @@ There are two stages in creating such a chatbot.
 We will use `PyTorch` to build classify input text into pre-defined `intents`. 
 
 For the first part which is building a general chat flow we will define custom intents for general discussions. We built a `TextClassificationModel` using PyTorch and used `torchtext` for pre-processing pipeline. 
-1. We created a custom dataset and defined some default intents. [Ref dataset](./model/intent-pair.csv)
+1. We created a custom dataset and defined some default intents. [Ref dataset](./model/intent_pair.csv)
 2. Then we trained a PyTorch based Sequential model on the dataset. [Ref notebook](https://www.kaggle.com/code/theayushanand/text-intent-classification-using-pytorch)
 3. We perform segmentation/tokenisation using `torchtext` on each query string and replace it with corresponding `int id` from the vocabulary we built over our training data.
 4. We predict the `intent` from the query and perform action as detailed in the above algorithm.
